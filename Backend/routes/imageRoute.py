@@ -18,9 +18,23 @@ from model.user import BirdImage, User
 from util.authUtil import get_current_user
 from dotenv import load_dotenv
 import os
+import google.generativeai as genai
 load_dotenv()
 connection_string = os.getenv("connection_string")
 container_name = os.getenv("container_name")
+
+API_URL = os.getenv("ml_api_url")
+headers = {"Authorization": os.getenv("header_auth_key")}
+
+genai.configure(api_key=os.getenv("g_api_key"))
+model = genai.GenerativeModel('gemini-pro')
+
+def query1(image_url):
+    # Download the image data from the provided URL
+    image_data = requests.get(image_url).content
+    # Make the API request with the image data
+    response = requests.post(API_URL, headers=headers, data=image_data)
+    return response.json()
 
 blob_service_client = BlobServiceClient.from_connection_string(connection_string)
 
@@ -75,10 +89,16 @@ async def upload_device_image(
         # Get the URL of the uploaded blob
         blob_url = blob_client.url
 
+        output = query1(blob_url)
+        bird_name = output[0]['label']
+        # print(bird_name)
+        response = model.generate_content(f"Give information for {bird_name}")
+        info = response.text
+        
         # Update BirdImage table with the URL
         bird_image = BirdImage(
             url=blob_url,
-            description=file.filename,
+            description=bird_name,
             created_at=datetime.now(timezone.utc),
             device_id=device_id,
             user_id=device.user_id
