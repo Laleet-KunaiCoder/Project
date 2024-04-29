@@ -18,8 +18,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Update with your React app URL
     allow_credentials=True,
-    allow_methods=["GET", "POST"],
-    allow_headers=["Authorization", "Content-Type"],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
