@@ -24,7 +24,7 @@ This project consists of a backend built with FastAPI and a frontend built with 
 Install the codebase & open the project folder
 
 ```bash
-  git clone <repository-url>
+  git clone https://github.com/Laleet-KunaiCoder/Project.git
   cd Project
 
 ```
