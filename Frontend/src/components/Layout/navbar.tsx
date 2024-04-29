@@ -7,8 +7,7 @@ import {
   Bird,
   Users,
   Search,
-  LogOut,
-  Handshake,
+  UserRoundCog,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,11 +20,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { ModeToggle } from "@/components/mode-toggle";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export function Navbar() {
   const navigate = useNavigate();
@@ -76,42 +76,54 @@ export function Navbar() {
         </SheetTrigger>
         <SheetContent side="left" className="flex flex-col">
           <nav className="grid gap-2 text-lg font-medium">
-            <Link
-              to="#"
-              className="flex items-center gap-2 text-lg font-semibold">
-              <Bird className="h-6 w-6" />
-              <span className="sr-only">Acme Inc</span>
-            </Link>
-            <Link
-              to="#"
-              className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground">
-              <Home className="h-5 w-5" />
-              Home
-            </Link>
-            <Link
-              to="#"
-              className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground">
-              <Bird className="h-5 w-5" />
-              Explore Birds
-            </Link>
-            <Link
-              to="#"
-              className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground">
-              <Package className="h-5 w-5" />
-              Products
-            </Link>
-            <Link
-              to="#"
-              className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground">
-              <Users className="h-5 w-5" />
-              Customers
-            </Link>
-            <Link
-              to="#"
-              className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground">
-              <LineChart className="h-5 w-5" />
-              Analytics
-            </Link>
+            <SheetTrigger asChild>
+              <NavLink
+                to="/"
+                className="flex items-center gap-2 text-lg font-semibold">
+                <Bird className="h-6 w-6" />
+                <span className="">SnapNest </span>
+              </NavLink>
+            </SheetTrigger>
+            <SheetTrigger asChild>
+              <NavLink
+                to="/"
+                className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground">
+                <Home className="h-5 w-5" />
+                Home
+              </NavLink>
+            </SheetTrigger>
+            <SheetTrigger asChild>
+              <NavLink
+                to="/birds"
+                className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground">
+                <Bird className="h-5 w-5" />
+                Explore Birds
+              </NavLink>
+            </SheetTrigger>
+            <SheetTrigger asChild>
+              <NavLink
+                to="/products"
+                className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground">
+                <Package className="h-5 w-5" />
+                Products
+              </NavLink>
+            </SheetTrigger>
+            <SheetTrigger asChild>
+              <NavLink
+                to="/aboutus"
+                className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground">
+                <Users className="h-5 w-5" />
+                About Us
+              </NavLink>
+            </SheetTrigger>
+            <SheetTrigger asChild>
+              <NavLink
+                to="/analytics"
+                className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground">
+                <LineChart className="h-5 w-5" />
+                Analytics
+              </NavLink>
+            </SheetTrigger>
           </nav>
         </SheetContent>
       </Sheet>
@@ -131,18 +143,26 @@ export function Navbar() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="secondary" size="icon" className="rounded-full">
-              <CircleUser className="h-5 w-5" />
+              <Avatar>
+                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
               <span className="sr-only">Toggle user menu</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuLabel className=" capitalize">
+              {userName}
+            </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="flex row gap-1">
-              <span className=" text-cyan-700"> #{userName}</span>
-              <Handshake className="h-4 w-4" />
+            <DropdownMenuItem>
+              <NavLink
+                to="/setting"
+                className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground">
+                <UserRoundCog className="h-4 w-4" />
+                Settings
+              </NavLink>
             </DropdownMenuItem>
-            <DropdownMenuItem>Setting</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={logOut}>Logout</DropdownMenuItem>
           </DropdownMenuContent>

@@ -35,7 +35,7 @@ export function SideNavbar() {
         </NavLink>
         <NavLink to="/products" className={generateNavLinkClasses}>
           <Package className="h-4 w-4" />
-          Products{" "}
+          Products
         </NavLink>
         <NavLink to="/aboutus" className={generateNavLinkClasses}>
           <Users className="h-4 w-4" />

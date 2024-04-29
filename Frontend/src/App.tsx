@@ -10,6 +10,7 @@ import Products from "./pages/products";
 import Analytics from "./pages/analytics";
 import AboutUs from "./pages/aboutus";
 import BirdDetails from "./pages/birddetail";
+import Setting from "./pages/setting";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
   {
     path: "aboutus",
     element: <AboutUs />,
+  },
+  {
+    path: "setting",
+    element: <Setting />,
   },
 ]);
 function App() {

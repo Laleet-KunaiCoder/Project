@@ -11,7 +11,7 @@ export default function Products() {
   return (
     <div className="max-h-screen ">
       <Navbar />
-      <div className="  grid w-full md:grid-cols-[1fr_40vw] lg:grid-cols-[20vw_1fr]">
+      <div className="  grid w-full md:grid-cols-[1fr] lg:grid-cols-[20vw_1fr]">
         <SideNavbar />
         <main className="my-14 py-4 top-14 min-h-screen lg:my-14">
           <section className="px-8 py-6">
