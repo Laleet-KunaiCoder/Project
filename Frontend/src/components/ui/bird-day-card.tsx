@@ -17,9 +17,8 @@ export default function BirdDayCard({ birdId }:any) {
     <Card>
       <CardHeader>
         <CardTitle>Bird Of The Day</CardTitle>
-        <CardDescription>naeme</CardDescription>
+        <CardDescription>Common Poorwill</CardDescription>
       </CardHeader>
-
       <CardContent className="grid gap-4">
         <div className="w-full my-auto">
           <AspectRatio ratio={4 / 3}>
@@ -30,8 +29,10 @@ export default function BirdDayCard({ birdId }:any) {
           </AspectRatio>
         </div>
         <p className="text-sm">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente
-          magnam ea distinctio! Sequi maiores neque laborum cumqu .
+          Description: Small, nocturnal bird (19-23 cm) with a long, pointed
+          tail and mottled brown and gray plumage.  Large eyes with black
+          pupils and white eyelids.  Short, inconspicuous bill with bristles
+          around the mouth.  Camouflages well with foliage and tree bark
         </p>
       </CardContent>
       <CardFooter>

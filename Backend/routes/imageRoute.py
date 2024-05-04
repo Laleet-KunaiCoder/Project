@@ -3,6 +3,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from sqlmodel import Session
 from typing import Annotated
+import json
 
 from database.db import *
 from model.user import *
@@ -92,13 +93,18 @@ async def upload_device_image(
         output = query1(blob_url)
         bird_name = output[0]['label']
         # print(bird_name)
-        response = model.generate_content(f"Give information for {bird_name}")
+        response = model.generate_content(f"Give information for {bird_name} ")
         info = response.text
-        
+        bird_data = {
+            "bird_name": bird_name,
+            "info": info
+        }
+        bird_data_json = json.dumps(bird_data)
+
         # Update BirdImage table with the URL
         bird_image = BirdImage(
             url=blob_url,
-            description=bird_name,
+            description=bird_data_json,
             created_at=datetime.now(timezone.utc),
             device_id=device_id,
             user_id=device.user_id
@@ -142,4 +148,21 @@ async def get_all_images(session: Session = Depends(get_session)):
 
     except Exception as e:
         # Return an error response if an exception occurs
+        return JSONResponse(status_code=500, content={"error": str(e)})
+    
+
+@router.delete("/images/{image_id}/")
+async def delete_image(image_id: int, session: Session = Depends(get_session)):
+    try:
+        # Query the database for the image with the given ID
+        image = session.query(BirdImage).filter(BirdImage.id == image_id).first()
+        if not image:
+            return JSONResponse(status_code=404, content={"message": "Image not found"})
+
+        # Delete the image from the database
+        session.delete(image)
+        session.commit()
+
+        return JSONResponse(status_code=200, content={"message": "Image deleted successfully"})
+    except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})

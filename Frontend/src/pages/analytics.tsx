@@ -64,9 +64,6 @@ export default function Analytics() {
     },
   });
   const [devices, setDevices] = useState<Device[]>([]);
-  const handleCheckboxChange = (deviceId: number) => {
-    setSelectedDeviceId(deviceId === selectedDeviceId ? null : deviceId);
-  };
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
       const formData = new FormData(); // Add the selected device ID to the form data
@@ -78,7 +75,7 @@ export default function Analytics() {
           accept: "application/json", // Set content type to multipart/form-data for file upload
         },
       };
-
+      console.log(selectedDeviceId);
       // Send a POST request to the backend route for uploading image
       const response = await axios.post(
         `${
@@ -89,7 +86,8 @@ export default function Analytics() {
       );
 
       console.log(response.data); // Log the response from the backend
-
+      setSelectedDeviceId(null);
+      setSelectedImage(null);
       // Your additional logic for handling the response goes here
     } catch (error) {
       console.error("Error uploading image:", error);
@@ -156,14 +154,14 @@ export default function Analytics() {
                         <TableCell>{device.latitude}</TableCell>
                         <TableCell>
                           <Checkbox
-                            onChange={() => handleCheckboxChange(device.id)}
+                            onClick={() =>{console.log(selectedDeviceId);setSelectedDeviceId(device.id);console.log(selectedDeviceId);}}
                           />
                         </TableCell>
                       </TableRow>
                     ))
                   ) : (
                     <TableRow>
-                      <TableCell className="text-center " colSpan={3}>
+                      <TableCell className="text-center " colSpan={4}>
                         No devices found
                       </TableCell>
                     </TableRow>
